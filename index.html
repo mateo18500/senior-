@@ -3,284 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SeniorsConnect - Aide informatique à domicile</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>Seniors Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --primary: #00bfa6;
-      --accent: #ff6e6c;
-      --light-bg: #fdfaf6;
-      --dark-text: #1e1e1e;
-      --rounded: 1.25rem;
-      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #D5C895; }
+    .lux-card {
+      background: white;
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--light-bg);
-      color: var(--dark-text);
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: #DB6851;
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: var(--dark-text);
-      font-weight: 500;
-    }
-
-    .cta-button {
-      background: var(--accent);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--rounded);
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .cta-button:hover {
-      background: #e35555;
-    }
-
-    .hero {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary);
-      color: white;
-      padding: 3rem 2rem;
-      border-bottom-left-radius: 5rem;
-    }
-
-    .hero-content {
-      flex: 1 1 400px;
-      padding: 1rem 2rem;
-    }
-
-    .hero-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-img {
-      flex: 1 1 400px;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .hero-img img {
-      max-width: 100%;
-      border-radius: var(--rounded);
-      box-shadow: var(--shadow);
-    }
-
-    section {
-      padding: 3rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    section h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      text-align: center;
-    }
-
-    section p, section ul {
-      text-align: center;
-    }
-
-    section ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    section ul li {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-    }
-
-    section ul li img {
-      margin-right: 10px;
-      width: 24px;
-      height: 24px;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .contact {
-      background: var(--accent);
-      color: white;
-      padding: 3rem 2rem;
-      border-radius: var(--rounded);
-      text-align: center;
-      margin: 3rem auto;
-      max-width: 1000px;
-      box-shadow: var(--shadow);
-    }
-
-    .contact a {
-      color: white;
-      text-decoration: underline;
-    }
-
-    #map {
-      width: 100%;
-      height: 300px;
-      border-radius: var(--rounded);
-      margin-top: 1.5rem;
-      box-shadow: var(--shadow);
-    }
-
-    footer {
-      background: #1e1e1e;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        flex-direction: column;
-        border-bottom-left-radius: 3rem;
-      }
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      section ul li {
-        flex-direction: column;
-        align-items: center;
-      }
+    .lux-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>SeniorsConnect</h1>
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#disponibilite">Disponibilité</a>
-      <a href="#zone">Zone</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<body class="text-gray-800" id="top">
+
+  <!-- Menu navigation -->
+  <nav class="sticky top-0 z-50 bg#D9B691 shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#top" class="font-bold text-lg text-gray-700">Seniors Connect</a>
+      <div class="space-x-6 text-sm font-medium text-gray-600">
+        <a href="#services" class="hover:text-black">Services</a>
+        <a href="#tarifs" class="hover:text-black">Tarifs</a>
+        <a href="#astuces" class="hover:text-black">Astuces</a>
+        <a href="#a-propos" class="hover:text-black">À propos</a>
+        <a href="#temoignages" class="hover:text-black">Témoignages</a>
+        <a href="#contact" class="hover:text-black">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Logo & Mois -->
+  <section class="flex items-center justify-between py-4 px-6 bg-white border-b border-gray-200 shadow-sm">
+    <div class="flex items-center gap-4">
+      <img src="logo.png" alt="Logo Seniors Connect" class="h-20 w-auto" />
+      <span class="text-xl font-semibold text-gray-700">Seniors Connect</span>
+    </div>
+    <p class="text-sm text-gray-500"><span id="mois"></span>.</p>
+  </section>
+
+  <!-- Hero -->
+  <header class="text-center py-24 px-6 bg-gradient-to-b from-white to-[##D9B691]">
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-4">Seniors Connect</h1>
+    <p class="text-xl text-gray-600">L’informatique à votre rythme, avec élégance et simplicité.</p>
+    <a href="#contact" class="mt-8 inline-block px-6 py-3 bg-black text-white rounded-full font-medium shadow hover:bg-gray-900 transition">Prendre contact</a>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h2>Aide informatique seniors à domicile</h2>
-      <p>Un accompagnement humain et sur mesure pour se familiariser avec le numérique.</p>
-      <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Je prends contact</button>
+  <!-- Services -->
+  <section id="services" class="py-24 px-6 bg-[D9B691] text-white">
+    <h2 class="text-4xl font-bold text-center mb-16">Nos services</h2>
+    <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+      <div class="lux-card p-6 text-black">
+        <h3 class="text-xl font-semibold mb-2">💻 Aide à l’ordinateur</h3>
+        <p>Naviguer sur Internet, trier ses photos, créer des documents…</p>
+      </div>
+      <div class="lux-card p-6 text-black">
+        <h3 class="text-xl font-semibold mb-2">📱 Smartphone & tablette</h3>
+        <p>Utiliser les appels, messages, WhatsApp, télécharger des applications…</p>
+      </div>
+      <div class="lux-card p-6 text-black">
+        <h3 class="text-xl font-semibold mb-2">🔐 Cyber Protection</h3>
+        <p>Aide à la détection de faux mail.</p>
+      </div>
+      <div class="lux-card p-6 text-black">
+        <h3 class="text-xl font-semibold mb-2">🧠 Formations personnalisées</h3>
+        <p>À domicile, à votre rythme, sur les sujets qui vous intéressent.</p>
+      </div>
     </div>
-    <div class="hero-img">
-      <img src="imacc.png" alt="Aide informatique à domicile pour les seniors" />
+  </section>
+
+  <!-- Tarifs -->
+  <section id="tarifs" class="py-24 px-6 bg-gray-50">
+    <h2 class="text-4xl font-bold text-center mb-16">Tarifs</h2>
+    <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-xl">
+      <table class="w-full text-left">
+        <thead class="bg-gray-800 text-white">
+          <tr><th class="p-4">Forfait</th><th class="p-4">Prix</th></tr>
+        </thead>
+        <tbody class="bg-white text-gray-700">
+          <tr class="border-b"><td class="p-4">Première visite (bilan)</td><td class="p-4">Gratuit</td></tr>
+          <tr class="border-b"><td class="p-4">Séance 1h à domicile</td><td class="p-4">30 €</td></tr>
+          <tr class="border-b"><td class="p-4">Pack 5 séances</td><td class="p-4">135 € (soit 27€/h)</td></tr>
+          <tr class="border-b"><td class="p-4">Aide administrative</td><td class="p-4">20 €</td></tr>
+          <tr><td class="p-4">Urgence informatique</td><td class="p-4">40 €</td></tr>
+        </tbody>
+      </table>
+      <p class="text-center text-sm text-gray-500 mt-4">Paiement en espèces, chèque ou virement.</p>
     </div>
   </section>
 
-  <section id="services" class="fade-in">
-    <h3>Services proposés</h3>
-    <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
-      <li>🖥️ Prise en main ordinateur / tablette / smartphone</li>
-      <li>💬 Utilisation de WhatsApp et e-mail</li>
-      <li>🌐 Navigation sur Internet (Chrome, Edge)</li>
-      <li>🔒 Protection contre les arnaques et hackers</li>
-      <li>📝 Création de fiches personnalisées simples</li>
-    </ul>
+  <!-- Astuces -->
+  <section id="astuces" class="py-24 px-6 max-w-6xl mx-auto">
+    <h2 class="text-4xl font-bold text-center mb-16">Astuces informatiques</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="lux-card p-6">
+        <h3 class="font-semibold text-lg mb-2">🧠 Reconnaitre un faux mail</h3>
+        <p class="text-gray-600">Ne cliquez jamais sur un lien suspect, vérifiez l’adresse de l’expéditeur.</p>
+      </div>
+      <div class="lux-card p-6">
+        <h3 class="font-semibold text-lg mb-2">📸 Organiser ses photos</h3>
+        <p class="text-gray-600">Créez des dossiers par année ou événement pour mieux vous y retrouver.</p>
+      </div>
+      <div class="lux-card p-6">
+        <h3 class="font-semibold text-lg mb-2">🔒 Créer un bon mot de passe</h3>
+        <p class="text-gray-600">Utilisez des lettres, chiffres et symboles : exemple : R0mane!2024</p>
+      </div>
+      <div class="lux-card p-6">
+        <h3 class="font-semibold text-lg mb-2">📱 Bloquer les appels indésirables</h3>
+        <p class="text-gray-600">Utilisez les réglages de votre téléphone ou une application spécialisée.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="tarifs" class="fade-in">
-    <h3>Tarifs</h3>
-    <p>💶 Séance à l’unité : <strong>30 €</strong> (soit <strong>15 €</strong> après réduction d'impôt)</p>
-    <p>📦 Forfait 5 séances : <strong>120 €</strong> (soit <strong>60 €</strong> après réduction)</p>
-    <p>🏡 Déplacement compris à Mehun-sur-Yèvre et alentours</p>
+  <!-- À propos -->
+  <section id="a-propos" class="py-24 px-6 bg-gray-50">
+    <h2 class="text-4xl font-bold text-center mb-10">À propos</h2>
+    <p class="max-w-3xl mx-auto text-lg text-center text-gray-700">
+      Je m'appelle Matéo et j’ai créé Seniors Connect pour accompagner les seniors dans leur quotidien numérique.
+      Patience, pédagogie, bienveillance : mes maîtres-mots pour vous aider à gagner en autonomie avec le sourire.
+    </p>
   </section>
 
-  <section id="disponibilite" class="fade-in">
-    <h3>Disponibilité</h3>
-    <p>Disponible <strong>tous les jours</strong> à Mehun-sur-Yèvre et ses alentours.</p>
+  <!-- Témoignages -->
+  <section id="temoignages" class="py-24 px-6">
+    <h2 class="text-4xl font-bold text-center mb-10">Témoignages</h2>
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div class="lux-card p-6"><p class="italic">« Merci pour votre aide avec mon smartphone, je me sens plus libre. »</p><p class="text-right text-sm text-gray-500 mt-2">— Mme Dubois, 73 ans</p></div>
+      <div class="lux-card p-6"><p class="italic">« Je peux maintenant appeler mes petits-enfants en visio ! »</p><p class="text-right text-sm text-gray-500 mt-2">— M. Gérard, 78 ans</p></div>
+    </div>
   </section>
 
-  <section id="zone" class="fade-in">
-    <h3>Zone d’intervention</h3>
-    <p>Je me déplace à domicile à Mehun-sur-Yèvre et dans les communes voisines.</p>
-    <div id="map"></div>
-  </section>
+ <!-- Contact -->
+<section id="contact" class="bg-[#D5C895] py-24 px-6">
+  <h2 class="text-4xl font-bold text-center mb-10">Contact</h2>
+  <div class="max-w-xl mx-auto">
+    <form id="form" class="space-y-6" action="https://formspree.io/f/mrblazpe" method="POST">
+      <input type="text" name="Nom" placeholder="Nom" class="w-full p-4 rounded-lg border border-gray-300" required />
+      <input type="email" name="Email" placeholder="Email" class="w-full p-4 rounded-lg border border-gray-300" required />
+      <textarea name="Message" placeholder="Votre message" rows="4" class="w-full p-4 rounded-lg border border-gray-300" required></textarea>
+      <button type="submit" class="w-full bg-black text-white font-semibold py-3 rounded-full hover:bg-gray-800 transition">Envoyer</button>
+    </form>
+    <p id="confirmation" class="text-center text-green-700 mt-6 hidden">✅ Message envoyé avec succès !</p>
+    <p class="text-center mt-8 text-gray-700">📞 07 49 68 22 47 — 📍 Mehun sur Yévre - Bourges - Vierzon </p>
+  </div>
+</section>
 
-  <section id="contact" class="contact fade-in">
-    <h3>Contact</h3>
-    <p><strong>Matéo CALLÉJA</strong></p>
-    <p>Téléphone : <a href="tel:+33749682247">07 49 68 22 47</a></p>
-    <p>Email : <a href="mailto:seniorsconnect18@gmail.com">seniorsconnect18@gmail.com</a></p>
-    <button class="cta-button" onclick="window.location='mailto:seniorsconnect18@gmail.com'">Envoyer un email</button>
-  </section>
+<script>
+  const form = document.getElementById("form");
+  const confirmation = document.getElementById("confirmation");
 
-  <footer>
-    <p>&copy; 2025 SeniorsConnect — Tous droits réservés.</p>
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        confirmation.classList.remove("hidden");
+        setTimeout(() => {
+          confirmation.classList.add("hidden");
+        }, 5000); // cache le message au bout de 5 sec
+      } else {
+        alert("Une erreur s’est produite. Merci d’essayer à nouveau.");
+      }
+    }).catch(error => {
+      alert("Erreur réseau. Veuillez réessayer plus tard.");
+    });
+  });
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-500 bg-gray-50 border-t">
+    © 2025 Seniors Connect — Conception Matéo CALLEJA
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([47.1333, 2.2167], 10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-    L.marker([47.1333, 2.2167]).addTo(map).bindPopup("Mehun-sur-Yèvre").openPopup();
-    L.circle([47.1333, 2.2167], {
-      color: '#00bfa6',
-      fillColor: '#00bfa688',
-      fillOpacity: 0.3,
-      radius: 18000
-    }).addTo(map);
+    const mois = [\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\"];
+    document.getElementById(\"mois\").textContent = mois[new Date().getMonth()];
+
+   // Force l'ouverture tout en haut, même si un # est présent
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      }
+    });
   </script>
 </body>
 </html>
