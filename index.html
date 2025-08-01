@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeniorConnect - Aide informatique à domicile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --primary: #00bfa6;
+      --accent: #ff6e6c;
+      --light-bg: #fdfaf6;
+      --dark-text: #1e1e1e;
+      --rounded: 1.25rem;
+      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #DB6851;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--dark-text);
+      font-weight: 500;
+    }
+
+    .cta-button {
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--rounded);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: #e35555;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: white;
+      padding: 3rem 2rem;
+      border-bottom-left-radius: 5rem;
+    }
+
+    .hero-content {
+      flex: 1 1 400px;
+      padding: 1rem 2rem;
+    }
+
+    .hero-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-img {
+      flex: 1 1 400px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .hero-img img {
+      max-width: 100%;
+      border-radius: var(--rounded);
+      box-shadow: var(--shadow);
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    section p, section ul {
+      text-align: center;
+    }
+
+    section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    section ul li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+
+    section ul li img {
+      margin-right: 10px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact {
+      background: var(--accent);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: var(--rounded);
+      text-align: center;
+      margin: 3rem auto;
+      max-width: 1000px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: var(--rounded);
+      margin-top: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      background: #1e1e1e;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        border-bottom-left-radius: 3rem;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      section ul li {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SeniorConnect</h1>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#disponibilite">Disponibilité</a>
+      <a href="#zone">Zone</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Aide informatique senior à domicile</h2>
+      <p>Un accompagnement humain, patient et personnalisé pour permettre à chaque senior de gagner en autonomie numérique.
+Que ce soit pour apprendre à utiliser un ordinateur, une tablette ou un smartphone, chaque session est adaptée au rythme de chacun.</p>
+<p>Nos formations couvrent les usages essentiels du numérique : naviguer sur Internet, envoyer des emails, participer à des visioconférences, consulter ses démarches administratives en ligne ou encore rester en contact avec ses proches via WhatsApp ou Messenger.
+</p>
+<p>Une attention particulière est portée à la sécurité informatique : gestion des mots de passe, reconnaissance des arnaques, protection des données personnelles, et conseils pratiques pour éviter les pièges du web.
+</p>
+<p>Grâce à une pédagogie bienveillante et des outils simples, chacun peut retrouver confiance et plaisir dans l’utilisation des outils numériques au quotidien.
+</p>
+      <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Je prends contact</button>
+    </div>
+    <div class="hero-img">
+      <img src="imacc.png" alt="Aide informatique à domicile pour les seniors" />
+    </div>
+  </section>
+
+  <section id="services" class="fade-in">
+    <h3>Services proposés</h3>
+    <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+      
+      <li>🖥️ Prise en main ordinateur / tablette / smartphone</li>
+      <li>💬 Utilisation de WhatsApp et e-mail</li>
+      <li>🌐 Navigation sur Internet (Chrome, Edge)</li>
+      <li>🔒 Protection contre les arnaques et hackers</li>
+      <li>📝 Création de fiches personnalisées simples</li>
+    </ul>
+  </section>
+
+  <section id="disponibilite" class="fade-in">
+    <h3>Disponibilité</h3>
+    <p>Disponible <strong>tous les jours</strong> à Mehun-sur-Yèvre et ses alentours.</p>
+  </section>
+
+  <section id="zone" class="fade-in">
+    <h3>Zone d’intervention</h3>
+    <p>Je me déplace à domicile à Mehun-sur-Yèvre et dans les communes voisines.</p>
+    <div id="map"></div>
+  </section>
+
+  <section id="contact" class="contact fade-in">
+    <h3>Contact</h3>
+    <p><strong>Matéo CALLÉJA</strong></p>
+    <p>Téléphone : <a href="tel:+33749682247">07 49 68 22 47</a></p>
+    <p>Email : <a href="mailto:seniorconnect18@gmail.com">seniorconnect18@gmail.com</a></p>
+    <button class="cta-button" onclick="window.location='mailto:seniorconnect18@gmail.com'">Envoyer un email</button>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SeniorConnect — Tous droits réservés.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([47.1333, 2.2167], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([47.1333, 2.2167]).addTo(map).bindPopup("Mehun-sur-Yèvre").openPopup();
+    L.circle([47.1333, 2.2167], {
+      color: '#00bfa6',
+      fillColor: '#00bfa688',
+      fillOpacity: 0.3,
+      radius: 18000
+    }).addTo(map);
+  </script>
+</body>
+</html>
