@@ -38,14 +38,20 @@
     </div>
   </nav>
 
-  <!-- Logo & Mois -->
-  <section class="flex items-center justify-between py-4 px-6 bg-white border-b border-gray-200 shadow-sm">
-    <div class="flex items-center gap-4">
-      <img src="logo.png" alt="Logo Seniors Connect" class="h-20 w-auto" />
-      <span class="text-xl font-semibold text-gray-700">Seniors Connect</span>
-    </div>
-    <p class="text-sm text-gray-500"><span id="mois"></span>.</p>
-  </section>
+ <!-- Logo, Mois & Bouton Jeux aligné à droite -->
+<section class="flex flex-wrap items-center justify-between gap-4 py-4 px-6 bg-white border-b border-gray-200 shadow-sm">
+  <div class="flex items-center gap-4">
+    <img src="logo.png" alt="Logo Seniors Connect" class="h-20 w-auto" />
+    <span class="text-xl font-semibold text-gray-700">Seniors Connect</span>
+  </div>
+
+  <p class="text-sm text-gray-500 hidden md:block"><span id="mois"></span>.</p>
+
+  <button onclick="window.open('https://mateo18500.github.io/Clavier-Souris/', '_blank')"
+    class="ml-auto bg-[#DB6851] text-white font-semibold text-sm md:text-base px-6 py-3 rounded-full shadow hover:bg-[#c65945] transition">
+    🎮 Page de jeux
+  </button>
+</section>
 
   <!-- Hero -->
   <header class="text-center py-24 px-6 bg-gradient-to-b from-white to-[##D9B691]">
